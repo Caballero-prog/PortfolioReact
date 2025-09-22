@@ -15,19 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Install and build frontend
+      - name: Install frontend dependencies and build
         run: |
           cd frontend
-          pnpm install
-          pnpm run build
+          npm install
+          npm run build
 
       - name: Copy frontend build into backend
         run: |
@@ -48,7 +45,7 @@ jobs:
       contents: read
 
     steps:
-      - name: Download artifact
+      - name: Download backend artifact
         uses: actions/download-artifact@v4
         with:
           name: backend-app
@@ -65,4 +62,4 @@ jobs:
         with:
           app-name: 'PortfolioReact'
           slot-name: 'Production'
-          package: .
+          package: backend
