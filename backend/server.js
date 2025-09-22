@@ -1,5 +1,8 @@
 import Fastify from "fastify";
 import fastifyCors from "@fastify/cors";
+import dotenv from "dotnev";
+
+dotenv.config();
 
 const fastify = Fastify({ logger: true });
 await fastify.register(fastifyCors, { origin: "*" });
