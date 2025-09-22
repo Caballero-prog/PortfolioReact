@@ -31,7 +31,8 @@ jobs:
           rm -rf backend/dist
           cp -r frontend/dist backend/
 
-      - name: Upload backend for deployment
+      # Upload backend source only, no node_modules
+      - name: Upload backend artifact
         uses: actions/upload-artifact@v4
         with:
           name: backend-app
