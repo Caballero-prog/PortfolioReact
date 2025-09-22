@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read # This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +23,10 @@ jobs:
         with:
           node-version: '22.x'
 
-      - name: npm install, build, and test
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: pnpm install, build, and test
         run: |
           pnpm install
           pnpm run build --if-present
@@ -64,3 +67,4 @@ jobs:
           package: .
 
           
+
