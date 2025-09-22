@@ -2,9 +2,6 @@ body {
   margin: 1rem;
 }
 
-* {
-  outline: 1px solid salmon;
-}
 ::selection {
   background: #e9fffe;
   color: #004255;
