@@ -1,0 +1,23 @@
+body {
+  margin: 1rem;
+}
+
+* {
+  outline: 1px solid salmon;
+}
+::selection {
+  background: #e9fffe;
+  color: #004255;
+}
+
+:root {
+  --background-color: #fff8ec;
+  --section-bg-color:#ffdaa6;
+  --accent-color: #bb3e03;
+  --text-color: #004255;
+  --big-hello: 6rem;
+  --hero-font-size:4rem;
+  --hero-sub-font-size: 3rem;
+  --title-font-size: 3rem;
+  --description-font-size: 1.4rem;
+}
