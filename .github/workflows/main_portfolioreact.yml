@@ -28,6 +28,7 @@ jobs:
 
       - name: pnpm install, build, and test
         run: |
+          cd frontend
           pnpm install
           pnpm run build --if-present
           pnpm run test --if-present
@@ -67,4 +68,5 @@ jobs:
           package: .
 
           
+
 
