@@ -20,18 +20,26 @@ jobs:
         with:
           node-version: '22.x'
 
+      # Install frontend dependencies and build
       - name: Install frontend dependencies and build
         run: |
           cd frontend
           npm install
           npm run build
 
+      # Copy frontend build into backend
       - name: Copy frontend build into backend
         run: |
           rm -rf backend/dist
           cp -r frontend/dist backend/
 
-      # Upload backend source only, no node_modules
+      # Install backend dependencies
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm install
+
+      # Upload backend for deployment (including node_modules)
       - name: Upload backend artifact
         uses: actions/upload-artifact@v4
         with:
