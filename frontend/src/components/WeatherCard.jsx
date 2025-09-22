@@ -10,35 +10,12 @@ const WeatherCard = () => {
     if (!city.trim()) return;
 
     try {
-      const BACKEND_URL =
-        import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
-      const res = await fetch(
-        `${BACKEND_URL}/weather?city=${encodeURIComponent(city)}`
-      );
-      let data;
-      try {
-        data = await res.json();
-      } catch (err) {
-        console.error("Failed to parse JSON:", err);
-        data = { error: "Invalid response" };
-      }
-
-      console.log("API response:", data); // <-- log every response
-
-      if (
-        !data ||
-        data.error ||
-        !data.city ||
-        data.weathercode == null ||
-        data.temperature == null
-      ) {
-        setWeather(data); // store even errors
-        return;
-      }
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+      const res = await fetch(`${BACKEND_URL}/weather?city=${encodeURIComponent(city)}`);
+      const data = await res.json();
 
       setWeather(data);
     } catch (err) {
-      console.error("Failed to fetch weather:", err);
       setWeather({ error: "Network error" });
     }
   };
@@ -69,20 +46,13 @@ const WeatherCard = () => {
     return map[code] || "Unknown";
   };
 
-  // Fallbacks
-  const cityName =
-    weather?.city || (weather?.error ? "City not found" : "City");
-  const temperature =
-    weather?.temperature != null ? `${weather.temperature}°C` : "N/A°C";
+  const cityName = weather?.city || (weather?.error ? "City not found" : "Finnish City");
+  const temperature = weather?.temperature != null ? `${weather.temperature}°C` : "N/A°C";
   const wind = weather?.windspeed ?? "N/A";
 
-  // Weather icon
   const weatherIcon =
     weather && weather.weathercode != null
-      ? new URL(
-          `../assets/weather-icons/${weather.weathercode}.png`,
-          import.meta.url
-        ).href
+      ? new URL(`../assets/weather-icons/${weather.weathercode}.png`, import.meta.url).href
       : ReporterImg;
 
   return (
