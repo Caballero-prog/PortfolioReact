@@ -11,18 +11,7 @@ const fastify = Fastify({ logger: true });
 // Enable CORS
 await fastify.register(fastifyCors, { origin: "*" });
 
-// Serve frontend static files from backend/dist
-await fastify.register(fastifyStatic, {
-  root: path.join(process.cwd(), "dist"),
-  prefix: "/",
-});
-
-// Fallback to index.html for SPA routing
-fastify.setNotFoundHandler((request, reply) => {
-  reply.sendFile("index.html");
-});
-
-// Weather API endpoint
+// --- Weather API endpoint FIRST ---
 fastify.get("/weather", async (request, reply) => {
   try {
     const { city } = request.query;
@@ -81,6 +70,18 @@ fastify.get("/weather", async (request, reply) => {
   }
 });
 
+// --- Serve frontend static files ---
+await fastify.register(fastifyStatic, {
+  root: path.join(process.cwd(), "dist"),
+  prefix: "/", // Serve SPA at root
+});
+
+// --- Fallback to index.html for SPA routing ---
+fastify.setNotFoundHandler((request, reply) => {
+  reply.sendFile("index.html");
+});
+
+// --- Start server ---
 const port = process.env.PORT || 3000;
 fastify.listen({ port, host: "0.0.0.0" }, (err, address) => {
   if (err) throw err;
