@@ -1,11 +1,18 @@
 import Fastify from "fastify";
 import fastifyCors from "@fastify/cors";
+import fastifyStatic from "@fastify/static";
+import path from "path";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const fastify = Fastify({ logger: true });
 await fastify.register(fastifyCors, { origin: "*" });
+
+await fastify.register(fastifyStatic, {
+  root: path.join(process.cwd(), "../frontend/dist"),
+  prefix: "/", // optional: serve at root
+});
 
 fastify.get("/weather", async (request, reply) => {
   try {
@@ -75,6 +82,10 @@ fastify.get("/weather", async (request, reply) => {
     fastify.log.error(error);
     return reply.status(500).send({ error: "Failed to fetch weather" });
   }
+});
+
+fastify.setNotFoundHandler((request, reply) => {
+  reply.sendFile("index.html"); // from dist folder
 });
 
 const port = process.env.PORT || 3000;
