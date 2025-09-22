@@ -7,29 +7,35 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const fastify = Fastify({ logger: true });
+
+// Enable CORS
 await fastify.register(fastifyCors, { origin: "*" });
 
+// Serve frontend static files from backend/dist
 await fastify.register(fastifyStatic, {
-  root: path.join(process.cwd(), "../frontend/dist"),
-  prefix: "/", // optional: serve at root
+  root: path.join(process.cwd(), "dist"),
+  prefix: "/",
 });
 
+// Fallback to index.html for SPA routing
+fastify.setNotFoundHandler((request, reply) => {
+  reply.sendFile("index.html");
+});
+
+// Weather API endpoint
 fastify.get("/weather", async (request, reply) => {
   try {
     const { city } = request.query;
-
     if (!city || !city.trim()) {
       return reply.status(400).send({ error: "City query parameter is required" });
     }
 
     const input = city.trim().toLowerCase();
 
-    // Reject obvious gibberish
     if (input.length < 2 || !/^[a-z\s\-]+$/.test(input)) {
       return reply.status(404).send({ error: "City not found" });
     }
 
-    // Geocode input
     const geoRes = await fetch(
       `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}`
     );
@@ -39,29 +45,20 @@ fastify.get("/weather", async (request, reply) => {
       return reply.status(404).send({ error: "City not found" });
     }
 
-    // Only Finnish cities
     const finnishCities = geoData.results.filter(c => c.country_code === "FI");
 
-    // Exact match or local name match
     let cityInfo = finnishCities.find(
       c =>
         c.name.toLowerCase() === input ||
-        (c.local_names &&
-          Object.values(c.local_names).some(n => n.toLowerCase() === input))
+        (c.local_names && Object.values(c.local_names).some(n => n.toLowerCase() === input))
     );
 
-    // fallback: first Finnish city if no exact/local match
     if (!cityInfo) cityInfo = finnishCities[0];
+    if (!cityInfo) return reply.status(404).send({ error: "City not found" });
 
-    // Reject if still nothing
-    if (!cityInfo) {
-      return reply.status(404).send({ error: "City not found" });
-    }
-
-    // Prefer Finnish or English local name
     const cityName = cityInfo.local_names?.fi || cityInfo.admin3 || cityInfo.name;
-
     const { latitude, longitude } = cityInfo;
+
     const weatherRes = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=celsius&timezone=Europe/Helsinki`
     );
@@ -82,10 +79,6 @@ fastify.get("/weather", async (request, reply) => {
     fastify.log.error(error);
     return reply.status(500).send({ error: "Failed to fetch weather" });
   }
-});
-
-fastify.setNotFoundHandler((request, reply) => {
-  reply.sendFile("index.html"); // from dist folder
 });
 
 const port = process.env.PORT || 3000;
