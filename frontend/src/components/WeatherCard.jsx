@@ -46,7 +46,7 @@ const WeatherCard = () => {
     return map[code] || "Unknown";
   };
 
-  const cityName = weather?.city || (weather?.error ? "City not found" : "Finnish City");
+  const cityName = weather?.city || (weather?.error ? "City not found" : "Fin City");
   const temperature = weather?.temperature != null ? `${weather.temperature}°C` : "N/A°C";
   const wind = weather?.windspeed ?? "N/A";
 
