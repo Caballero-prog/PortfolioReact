@@ -8,10 +8,10 @@ dotenv.config();
 
 const fastify = Fastify({ logger: true });
 
-// Enable CORS
+// Enable CORS for frontend
 await fastify.register(fastifyCors, { origin: "*" });
 
-// --- Weather API endpoint FIRST ---
+// --- Weather API endpoint (must come BEFORE static files) ---
 fastify.get("/weather", async (request, reply) => {
   try {
     const { city } = request.query;
@@ -20,7 +20,6 @@ fastify.get("/weather", async (request, reply) => {
     }
 
     const input = city.trim().toLowerCase();
-
     if (input.length < 2 || !/^[a-z\s\-]+$/.test(input)) {
       return reply.status(404).send({ error: "City not found" });
     }
@@ -35,13 +34,11 @@ fastify.get("/weather", async (request, reply) => {
     }
 
     const finnishCities = geoData.results.filter(c => c.country_code === "FI");
-
     let cityInfo = finnishCities.find(
       c =>
         c.name.toLowerCase() === input ||
         (c.local_names && Object.values(c.local_names).some(n => n.toLowerCase() === input))
     );
-
     if (!cityInfo) cityInfo = finnishCities[0];
     if (!cityInfo) return reply.status(404).send({ error: "City not found" });
 
