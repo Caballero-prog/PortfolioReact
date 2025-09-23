@@ -7,18 +7,23 @@ const WeatherCard = () => {
   const [weather, setWeather] = useState(null);
 
   const fetchWeather = async () => {
-    if (!city.trim()) return;
+  if (!city.trim()) return;
 
-    try {
-      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
-      const res = await fetch(`${BACKEND_URL}/weather?city=${encodeURIComponent(city)}`);
-      const data = await res.json();
+  try {
+    // In production, use relative URL
+    const BACKEND_URL =
+      import.meta.env.VITE_BACKEND_URL && import.meta.env.VITE_BACKEND_URL !== ""
+        ? import.meta.env.VITE_BACKEND_URL
+        : "";
+    const res = await fetch(`${BACKEND_URL}/weather?city=${encodeURIComponent(city)}`);
+    const data = await res.json();
 
-      setWeather(data);
-    } catch (err) {
-      setWeather({ error: "Network error" });
-    }
-  };
+    setWeather(data);
+  } catch (err) {
+    setWeather({ error: "Network error" });
+  }
+};
+
 
   const weatherDescription = (code) => {
     const map = {
