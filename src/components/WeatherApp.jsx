@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./WeatherApp.css";
-import UmbrellaImg from "../assets/Umbrella.svg";
 
 const WeatherApp = () => {
-  const [isOpen, setIsOpen] = useState(false); // modal open state
+  const [isOpen, setIsOpen] = useState(false);
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState("");
 
+  // Mapping weather codes to description
   const descMap = {
     0: "Clear sky",
     1: "Mainly clear",
@@ -69,9 +69,11 @@ const WeatherApp = () => {
     }
   };
 
-  const weatherIcon = weather?.weathercode !== undefined && weather?.weathercode !== null
-  ? new URL(`../assets/weather-icons/${weather.weathercode}.png`, import.meta.url).href
-  : UmbrellaImg;
+  // Use public folder path for icons
+  const weatherIcon =
+    weather?.weathercode !== undefined && weather?.weathercode !== null
+      ? `/PortfolioReact/weather-icons/${weather.weathercode}.png`
+      : `/PortfolioReact/weather-icons/Umbrella.svg`;
 
   return (
     <main>
@@ -81,23 +83,17 @@ const WeatherApp = () => {
             Weather App<b className="dot">.</b>
           </h2>
           <p className="section-description">
-            Built with <b>React</b>, <b>axios</b> for data fetching, and <b>React hooks</b>{" "}
-            for state management. Weather data is fetched from the <b>Open-Meteo API</b>{" "}
-            to provide real-time updates.
-          </p>
-          <p className="section-description">
-            The backend is powered by <b>Node.js</b> and <b>Fastify</b>, enabling efficient handling of data requests.
+            Built with <b>React</b> and <b>React hooks</b>. Weather data is fetched from the <b>Open-Meteo API</b>.
           </p>
           <button className="open-btn" onClick={() => setIsOpen(true)}>
             Open
           </button>
         </article>
         <figure className="weather-img-container">
-          <img loading="lazy" src={UmbrellaImg} alt="Weather illustration" />
+          <img loading="lazy" src={`/PortfolioReact/weather-icons/Umbrella.svg`} alt="Weather illustration" />
         </figure>
       </section>
 
-      {/* Modal */}
       {isOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -126,18 +122,10 @@ const WeatherApp = () => {
               {error && <p className="error">{error}</p>}
               {weather && (
                 <>
-                  <p>
-                    <strong>City:</strong> {weather.city}
-                  </p>
-                  <p>
-                    <strong>Temperature:</strong> {weather.temperature}°C
-                  </p>
-                  <p>
-                    <strong>Wind:</strong> {weather.windspeed} km/h
-                  </p>
-                  <p>
-                    <strong>Description:</strong> {weather.description}
-                  </p>
+                  <p><strong>City:</strong> {weather.city}</p>
+                  <p><strong>Temperature:</strong> {weather.temperature}°C</p>
+                  <p><strong>Wind:</strong> {weather.windspeed} km/h</p>
+                  <p><strong>Description:</strong> {weather.description}</p>
                   <img src={weatherIcon} alt={weather.description} />
                 </>
               )}
