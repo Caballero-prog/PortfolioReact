@@ -1,0 +1,127 @@
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.about-grid,
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "about"
+    "image";
+  padding-left: clamp(1rem, -1.743rem + 13.71vw, 2rem);
+  padding-right: clamp(1rem, -1.743rem + 13.71vw, 2rem);
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  gap: clamp(1rem, 0.143rem + 4.29vw, 4rem);
+}
+
+.about-card,
+.skills-card {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-area: about;
+}
+
+.skills-grid {
+  background-color: #dad7cd;
+}
+
+.section-title {
+  padding: 0.6rem 0rem;
+  font-family: "Paytone One", sans-serif;
+  font-size: clamp(1.6rem, 1.178rem + 2.11vw, 2.19rem);
+  text-align: left;
+}
+
+.section-description {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  margin-top: 0.6rem;
+  line-height: 1.4;
+}
+
+.about-img-container,
+.skills-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: image;
+}
+
+.about-img-container img,
+.skills-img-container img {
+  height: auto;
+  width: 100%;
+  max-height: 30rem;
+  object-fit: cover;
+  border: 1px solid #2f3e46;
+  opacity: 0.8;
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+  .about-grid,
+  .skills-grid {
+    padding-left: clamp(2rem, -0.374rem + 8.91vw, 3.9rem);
+    padding-right: clamp(2rem, -0.374rem + 8.91vw, 3.9rem);
+  }
+}
+@media (min-width: 768px) {
+  .about-grid,
+  .skills-grid {
+    padding-left: clamp(4rem, -4.734rem + 18.2vw, 6.9rem);
+    padding-right: clamp(4rem, -4.734rem + 18.2vw, 6.9rem);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "image about";
+  }
+  .skills-grid {
+    grid-template-areas: "about image";
+    grid-template-columns: 1fr 1fr;
+  }
+  .section-title {
+    font-size: clamp(2.2rem, 0.423rem + 3.7vw, 2.79rem);
+  }
+  .section-description {
+    font-size: clamp(1rem, 0.428rem + 1.19vw, 1.19rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-grid,
+  .skills-grid
+  .intro {
+    padding-left: clamp(7rem, -0.156rem + 11.18vw, 9.9rem);
+    padding-right: clamp(7rem, -0.156rem + 11.18vw, 9.9rem);
+    grid-template-columns: 1fr 1fr;
+  }
+  .skills-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .section-title {
+    font-size: clamp(2.8rem, 1.344rem + 2.27vw, 3.39rem);
+  }
+  .section-description {
+    font-size: clamp(1.2rem, 0.732rem + 0.73vw, 1.39rem);
+  }
+}
+
+@media (min-width: 1440px) {
+  .about-grid,
+  .skills-grid {
+    padding-left: clamp(10rem, -45.385rem + 61.54vw, 20rem);
+    padding-right: clamp(10rem, -45.385rem + 61.54vw, 20rem);
+    grid-template-columns: 1fr 1fr;
+  }
+  .skills-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .section-title {
+    font-size: 3.4rem;
+  }
+  .section-description {
+    font-size: 1.4rem;
+  }
+}

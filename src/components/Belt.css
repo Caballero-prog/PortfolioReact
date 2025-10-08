@@ -1,0 +1,68 @@
+.belt-bg {
+  background-color: #344e41;
+  margin-top: 8rem;
+  border-top: #2f3e46 1px solid;
+  border-bottom: #2f3e46 1px solid;
+}
+.intro {
+  font-family: "Paytone One", sans-serif;
+  font-size: clamp(1.6rem, 1.178rem + 2.11vw, 2.19rem);
+  color: #dad7cd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+.intro i {
+  font-size: clamp(1rem, 0.29rem + 2.67vw, 2rem);
+}
+.intro > * {
+  margin: 0.4rem 0rem;
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+  .intro {
+    padding-left: clamp(2rem, -0.374rem + 8.91vw, 3.9rem);
+    padding-right: clamp(2rem, -0.374rem + 8.91vw, 3.9rem);
+    padding-bottom: clamp(1rem, -0.239rem + 4.66vw, 2rem);
+    padding-top: clamp(1rem, -0.239rem + 4.66vw, 2rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .intro {
+    flex-direction: row;
+    padding-left: clamp(4rem, -4.734rem + 18.2vw, 6.9rem);
+    padding-right: clamp(4rem, -4.734rem + 18.2vw, 6.9rem);
+    padding-bottom: clamp(2rem, -4rem + 12.5vw, 4rem);
+    padding-top: clamp(2rem, -4rem + 12.5vw, 4rem);
+  }
+  .belt-title {
+    font-size: clamp(2.2rem, 0.423rem + 3.7vw, 2.79rem);
+  }
+  .intro > * {
+    margin: 0rem 0.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .belt-title {
+    font-size: clamp(2.8rem, 1.344rem + 2.27vw, 3.39rem);
+  }
+  .intro {
+    padding-left: clamp(7rem, -0.156rem + 11.18vw, 9.9rem);
+    padding-right: clamp(7rem, -0.156rem + 11.18vw, 9.9rem);
+  }
+}
+@media (min-width: 1440px) {
+  .intro {
+    padding-left: clamp(10rem, -45.385rem + 61.54vw, 20rem);
+    padding-right: clamp(10rem, -45.385rem + 61.54vw, 20rem);
+  }
+
+  .belt-title {
+    font-size: 3.4rem;
+  }
+}

@@ -1,0 +1,22 @@
+.social-icons-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: #344e41;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.fa-brands {
+  font-size: 2.4rem;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  color: #dad7cd;
+}
+
+.fa-brands:hover {
+  transform: translateY(-4px);
+}

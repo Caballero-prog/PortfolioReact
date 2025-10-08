@@ -1,0 +1,12 @@
+::selection {
+  background: #faf6ec;
+  color: #361e12;
+}
+
+body {
+  color: #081c15;
+}
+.main-grid b {
+ font-weight: 700;
+ color: #344e41;
+}
